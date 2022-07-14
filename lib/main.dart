@@ -16,8 +16,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<Controller>(
-            create: (_) => Controller(),
-            dispose: (_, controller) => controller.dispose())
+          create: (_) => Controller(),
+          dispose: (_, controller) => controller.dispose(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
