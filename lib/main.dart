@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mob/controller.dart';
+import 'package:provider/provider.dart';
 
 import 'home.dart';
 
@@ -11,12 +13,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        Provider<Controller>(
+            create: (_) => Controller(),
+            dispose: (_, controller) => controller.dispose())
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyHomePage(title: 'Formulário'),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }

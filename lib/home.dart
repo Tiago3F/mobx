@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
-import 'controller.dart';
+import 'package:mob/body.dart';
+import 'package:mob/controller.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -13,47 +14,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final controller = Controller();
-
   @override
   Widget build(BuildContext context) {
+    final controller = Provider.of<Controller>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Observer(
+            builder: (_) => Text(controller.isValid
+                ? 'Formulário Validado'
+                : 'Formulário Não Validado')),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                decoration: const InputDecoration(labelText: 'Nome'),
-                onChanged: controller.mudarNome,
-              ),
-            ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: TextField(
-                decoration: InputDecoration(labelText: 'Sobrenome'),
-                onChanged: controller.mudarSobrenome,
-              ),
-            ),
-            SizedBox(height: 20),
-            Observer(
-              builder: (_) {
-                return Text('${controller.nomecompleto}');
-              },
-            )
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      body: const BodyWidget(),
     );
   }
 }
